@@ -54,11 +54,11 @@ scheduler.start()
 collections_in_progress = {}
 letterboxd_collections = {}
 
-DEFAULT_ROOT_FOLDER = "/Plex/Movies 4k"
-DEFAULT_QUALITY_PROFILE = "Any"
-DEFAULT_PLEX_LIBRARY = "Movies"
+DEFAULT_ROOT_FOLDER = "/movies"
+DEFAULT_QUALITY_PROFILE = "HD-1080p"
+DEFAULT_PLEX_LIBRARY = "Films"
 DEFAULT_LANG = "english"
-DEFAULT_MODEL = "mistral-saba-24b"
+DEFAULT_MODEL = "mixtral-8x7b-32768"
 
 class AIClient(ABC):
     @abstractmethod
