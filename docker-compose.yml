@@ -9,13 +9,13 @@ services:
       - .:/app
     environment:
       - FLASK_ENV=development
-      - PLEX_URL=http://192.168.1.122:32400
-      - PLEX_TOKEN=VxqLCxqXymVBq1Kw24fw
-      - RADARR_URL=http://192.168.1.122:30025
-      - RADARR_API_KEY=f558a3e2565d4c87b60a75eefbb2c8d1
+      - PLEX_URL=
+      - PLEX_TOKEN=
+      - RADARR_URL=
+      - RADARR_API_KEY=
       - MODEL_SERVER=GROQ
-      - GROQ_API_KEY=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
-      - OLLAMA_URL=http://ollama:11434
+      - GROQ_API_KEY=
+      - OLLAMA_URL=
       - TZ=Europe/Paris
     command: flask run --host=0.0.0.0 --port=9999
     networks:
