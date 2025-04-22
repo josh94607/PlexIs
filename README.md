@@ -92,13 +92,45 @@ The web server will be available at [http://localhost:9999](http://localhost:999
 
 ---
 
+## Contributing
+
+Contributions are welcome! If you want to add new features, fix bugs, or improve the app, follow these steps:
+
+1. **Fork the repository** on GitHub.
+2. **Clone your fork** locally:
+   ```bash
+   git clone https://github.com/JulesMellot/PlexIs.git
+   cd PlexIs
+   ```    
+3. **Create a new branch** for your feature or fix:
+   ```bash
+   git checkout -b my-feature
+   ```
+4. **Make your changes**. Update code, add tests, and update documentation as needed.
+5. **Commit and push** your changes:
+   ```bash
+   git add .
+   git commit -m "Add my feature"
+   git push origin my-feature
+   ```
+6. **Open a Pull Request** on GitHub. Describe your changes and reference any related issues.
+
+### Guidelines
+- Please write clear commit messages and document your code.
+- For major changes, open an issue first to discuss what you want to change.
+- Make sure your code passes existing tests and does not break the build.
+
+Thank you for helping to improve PlexIs!
+
+---
+
 ## License
 MIT License
 
 ---
 
 ## Credits
-Developed by Jules Mellot and contributors in France with ❤️.
+Developed by Jules Mellot and contributors.
 
 ---
 
