@@ -1,6 +1,6 @@
-# Plex Collection Creator
+# PlexIs
 
-Plex Collection Creator is a web application that helps you generate and manage movie collections for your Plex Media Server, using AI-powered recommendations. You can search for movies by theme, create collections, and even manage your existing collections directly from the web interface. The app supports multi-language UI and can integrate with Plex and Radarr.
+PlexIs is a web application that helps you generate and manage movie collections for your Plex Media Server, using AI-powered recommendations. You can search for movies by theme, create collections, and even manage your existing collections directly from the web interface. The app supports multi-language UI and can integrate with Plex and Radarr.
 
 ---
 
@@ -20,14 +20,14 @@ Plex Collection Creator is a web application that helps you generate and manage 
 ### Prerequisites
 - [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) installed
 - A running Plex Media Server
-- (Optional) A running Radarr instance for automated downloads
-- API keys for Plex, Radarr, and optionally GROQ/Ollama
+- A running Radarr instance for automated downloads
+- API keys for Plex, Radarr, and GROQ or Ollama
 
 ### Installation & Launch
 
 #### 1. Clone the repository
 ```bash
-git clone <this-repo-url>
+git clone https://github.com/JulesMellot/PlexIs.git
 cd plex-recommandation
 ```
 
