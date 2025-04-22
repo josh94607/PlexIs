@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "9999:9999"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=development
+      - PLEX_URL=http://192.168.1.122:32400
+      - PLEX_TOKEN=VxqLCxqXymVBq1Kw24fw
+      - RADARR_URL=http://192.168.1.122:30025
+      - RADARR_API_KEY=f558a3e2565d4c87b60a75eefbb2c8d1
+      - MODEL_SERVER=GROQ
+      - GROQ_API_KEY=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
+      - OLLAMA_URL=http://ollama:11434
+      - TZ=Europe/Paris
+    command: flask run --host=0.0.0.0 --port=9999
+    networks:
+      - mynetwork
+#    depends_on:
+#      - ollama
+
+#  ollama:
+#    image: ollama/ollama
+#    ports:
+#      - "11434:11434"
+#    volumes:
+#      - ./ollama_data:/root/.ollama
+#    networks:
+#      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge

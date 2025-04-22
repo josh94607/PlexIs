@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plex Collection Creator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js" integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</style>
+</head>
+<body>
+
+    <div id="loading-overlay" style="display: none;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden" data-translate="loading"></span>
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="logo">Plex is</div>
+        <div class="subtitle">a collection creator...</div>
+        <div class="example-container">
+            <span data-translate="example"></span>: "<span id="example-wrapper"><span id="example-text"></span></span>"
+        </div>
+        <div class="search-container">
+            <input type="text" id="theme-input" class="search-input" data-translate="search_placeholder">
+            <span class="search-icon">🔍</span>
+        </div>
+        
+        <div class="search-options">
+            <select id="search-option" class="btn">
+                <option value="library" data-translate="only_library"></option>
+                <option value="mixed" selected data-translate="library_and_discovery"></option>
+                <option value="discovery" data-translate="only_discovery"></option>
+            </select>
+            <button id="search-button" class="btn" data-translate="search_button"></button>
+            <button class="btn" data-bs-toggle="modal" data-bs-target="#settingsModal" data-translate="settings"></button>
+        </div>
+
+        <div id="results-section" style="display: none;">
+            <h2 data-translate="recommendations"></h2>
+            <button id="select-all-btn" class="btn btn-secondary mb-2" data-translate="select_all"></button>
+            <div id="movie-list"></div>
+            <div id="create-collection-button-container"></div>
+        </div>
+
+        <div id="collections-section">
+            <div id="collections-list"></div>
+        </div>
+    </div>
+
+    <!-- Modal for settings -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="settingsModalLabel" data-translate="settings"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="root-folder" class="form-label" data-translate="root_folder"></label>
+                        <select id="root-folder" class="form-select"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quality-profile" class="form-label" data-translate="quality_profile"></label>
+                        <select id="quality-profile" class="form-select"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="plex-library" class="form-label" data-translate="plex_library"></label>
+                        <select id="plex-library" class="form-select"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="language" class="form-label" data-translate="language"></label>
+                        <select id="language" class="form-select">
+                            <option value="english">English</option>
+                            <option value="french">Français</option>
+                            <option value="spanish">Spanish</option>
+                            <option value="german">German</option>
+                            <option value="italian">Italian</option>
+                            <option value="portuguese">Portuguese</option>
+                            <option value="russian">Russian</option>
+                            <option value="japanese">Japanese</option>
+                            <option value="pirate">Pirate</option>
+                            <!-- Add more languages here -->
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modelSelect" class="form-label" data-translate="model">Model</label>
+                        <select class="form-select" id="modelSelect">
+                        </select>
+                        <div class="form-text" id="modelInfo" data-translate="modelInfo">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-translate="close"></button>
+                    <button type="button" class="btn btn-primary" onclick="saveSettings()" data-translate="save_settings"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <audio id="pirate-music" loop>
+        <source src="{{ url_for('static', filename='pirate-music.mp3') }}" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'élément audio.
+    </audio>
+    <script>
+        const UI_TRANSLATIONS = {{ UI_TRANSLATIONS|tojson|safe }};
+    </script>
+
+    <footer>
+        <p id="footer-text" data-translate="footer_text">Votre texte ici</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gérer les Collections</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container main-container">
+        <div class="logo">
+            Plex is
+        </div>
+        <div class="subtitle">
+            a collection manager...
+        </div>
+
+        <div id="back-section">
+            <a href="/" class="btn btn-secondary mb-3">
+                <span class="arrow">←</span>
+                <span data-translate="back_to_main">Retour à la page principale</span>
+            </a>
+        </div>
+
+        <div id="collections-list" class="collections-container">
+            <!-- Les collections seront insérées ici dynamiquement -->
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/static/script.js"></script>
+    <script>
+        const UI_TRANSLATIONS = {{ UI_TRANSLATIONS|tojson|safe }};
+    </script>
+<script>
+        // Fonction pour mettre à jour la liste des collections
+        function updateCollectionsList() {
+            axios.get('/collections_status')
+                .then(function (response) {
+                    const collectionsList = document.getElementById('collections-list');
+                    collectionsList.innerHTML = '';
+                    response.data.forEach(collection => {
+                        const collectionElement = document.createElement('div');
+                        collectionElement.classList.add('collection-item');
+                        
+                        let collectionHtml = `
+                            <h3>
+                                ${collection.is_letterboxd ? '<i class="fas fa-film letterboxd-icon"></i>' : ''}
+                                ${collection.name}
+                            </h3>
+                        `;
+
+                        if (collection.is_letterboxd) {
+                            collectionHtml += `
+                                <p>URL: <a href="${collection.url}" target="_blank">${collection.url}</a></p>
+                                <p>${UI_TRANSLATIONS[currentLanguage].movies_count}: ${collection.movies ? collection.movies.length : 0}</p>
+                                <p>${UI_TRANSLATIONS[currentLanguage].last_updated}: ${new Date(collection.last_updated).toLocaleString()}</p>
+                            `;
+                        } else {
+                            const statusKey = collection.status ? collection.status.toLowerCase() : '';
+                            let statusTranslation = UI_TRANSLATIONS[currentLanguage][statusKey] || collection.status;
+                            let statusHtml = statusTranslation;
+
+                            if (statusKey === 'in_progress') {
+                                statusHtml += ' <div class="loading-spinner"></div>';
+                            }
+
+                            collectionHtml += `
+                                <p>${UI_TRANSLATIONS[currentLanguage].movies_added}: ${collection.added_count}/${collection.total_count}</p>
+                                <p>${UI_TRANSLATIONS[currentLanguage].status}: ${statusHtml}</p>
+                            `;
+                        }
+
+                        collectionElement.innerHTML = collectionHtml;
+                        collectionsList.appendChild(collectionElement);
+                    });
+                })
+                .catch(function (error) {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Appeler updateCollectionsList au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCollectionsList();
+            // Mettre à jour la liste toutes les 30 secondes
+            setInterval(updateCollectionsList, 30000);
+        });
+    </script>
+</body>
+</html>
